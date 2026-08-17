@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: log-file-count-alerts
+  namespace: default
+  labels:
+    release: prometheus
+    app: file-monitor
+spec:
+  groups:
+  - name: log-file-count.rules
+    rules:
+    - alert: HighLogFileCount
+      expr: sum(files_count{file_type="log"}) > 100
+      for: 5m
+      labels:
+        severity: warning
+        app: file-monitor
+      annotations:
+        summary: "High log file count detected"
+        description: "Log file count has exceeded 100 (current value: {{ $value }})"
