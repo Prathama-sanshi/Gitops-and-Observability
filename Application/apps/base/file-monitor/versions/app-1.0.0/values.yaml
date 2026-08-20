@@ -8,10 +8,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Prathama-sanshi/Argocd-and-Observability.git
+    repoURL: git@github.com:Prathama-sanshi/Argocd-and-Observability.git
     targetRevision: gitops-obs
     path: Application/helm charts/file-monitor-charts
     helm:
+      releaseName: file-monitor
       values: |
         # Default values for file-monitor-charts.
         # This is a YAML-formatted file.
