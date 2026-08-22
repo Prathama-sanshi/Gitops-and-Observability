@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Prathama-sanshi/Argocd-and-Observability.git
+    repoURL: git@github.com:Prathama-sanshi/Argocd-and-Observability.git
     targetRevision: gitops-obs
     path: Application/helm charts/kube-prometheus-stack
     helm:
