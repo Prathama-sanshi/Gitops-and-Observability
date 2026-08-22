@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: txt-file-count-alerts
+  namespace: default
+  labels:
+    release: prometheus
+    app: file-monitor
+spec:
+  groups:
+  - name: txt-file-count.rules
+    rules:
+    - alert: HighTxtFileCount
+      expr: sum(files_count{file_type="txt"}) > 100
+      for: 5m
+      labels:
+        severity: warning
+        app: file-monitor
+      annotations:
+        summary: "High text file count detected"
+        description: "Text file count has exceeded 100 (current value: {{ $value }})"

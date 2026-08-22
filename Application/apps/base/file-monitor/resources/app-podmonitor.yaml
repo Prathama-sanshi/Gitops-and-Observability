@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    app: file-monitor
+    release: prometheus
+  name: custom-file-monitor-podmonitor
+  namespace: default
+spec:
+  podMetricsEndpoints:
+    - interval: 15s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+      app: file-monitor
