@@ -13,8 +13,8 @@ kubectl get secret --namespace default -l app.kubernetes.io/component=admin-secr
 
 
 
-kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090:9090 
-http://localhost:9090
+ kubectl port-forward svc/observability-kube-prometh-prometheus 9090:9090
+ http://localhost:9090
 
 cat ~/.ssh/id_ed25519_argocd.pub
 cat ~/.ssh/id_ed25519_argocd

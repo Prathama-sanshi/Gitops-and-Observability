@@ -3,7 +3,7 @@ kind: PodMonitor
 metadata:
   labels:
     app: file-monitor
-    release: prometheus
+    release: observability 
   name: custom-file-monitor-podmonitor
   namespace: default
 spec:
