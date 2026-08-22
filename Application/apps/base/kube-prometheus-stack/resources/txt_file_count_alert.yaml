@@ -4,8 +4,8 @@ metadata:
   name: txt-file-count-alerts
   namespace: default
   labels:
-    release: prometheus
     app: file-monitor
+    release: observability 
 spec:
   groups:
   - name: txt-file-count.rules

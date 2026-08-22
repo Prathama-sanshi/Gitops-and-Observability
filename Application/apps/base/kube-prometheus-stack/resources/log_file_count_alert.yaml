@@ -4,7 +4,7 @@ metadata:
   name: log-file-count-alerts
   namespace: default
   labels:
-    release: prometheus
+    release: observability 
     app: file-monitor
 spec:
   groups:
