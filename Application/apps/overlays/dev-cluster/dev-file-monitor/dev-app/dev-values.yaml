@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: git@github.com:Prathama-sanshi/Argocd-and-Observability.git
     targetRevision: gitops-obs
-    path: Application/apps/base/file-monitor/versions/file-monitor-1.0.0
+    path: Application/helm-charts/file-monitor/
     helm:
       releaseName: file-monitor
       values: |
