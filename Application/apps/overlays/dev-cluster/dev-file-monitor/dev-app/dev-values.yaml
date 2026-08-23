@@ -218,4 +218,4 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
       - Replace=true
-      - allowEmpty=true # THIS LINE TO TOGGLE DELETION ON
+      - allowEmpty=true
