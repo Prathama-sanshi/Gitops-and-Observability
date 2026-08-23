@@ -4,8 +4,8 @@ metadata:
   name: txt-file-count-alerts
   namespace: default
   labels:
-    release: prometheus
     app: file-monitor
+    release: kube-prometheus-stack 
 spec:
   groups:
   - name: txt-file-count.rules
@@ -16,6 +16,7 @@ spec:
       labels:
         severity: warning
         app: file-monitor
+        env: dev
       annotations:
         summary: "High text file count detected"
         description: "Text file count has exceeded 100 (current value: {{ $value }})"

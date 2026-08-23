@@ -4,7 +4,7 @@ metadata:
   name: log-file-count-alerts
   namespace: default
   labels:
-    release: prometheus
+    release: kube-prometheus-stack 
     app: file-monitor
 spec:
   groups:
@@ -16,6 +16,7 @@ spec:
       labels:
         severity: warning
         app: file-monitor
+        env: dev
       annotations:
         summary: "High log file count detected"
         description: "Log file count has exceeded 100 (current value: {{ $value }})"

@@ -1,5 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - file-monitor
-  - kube-prometheus-stack
+  - dev-file-monitor
+  - dev-kube-prometheus-stack

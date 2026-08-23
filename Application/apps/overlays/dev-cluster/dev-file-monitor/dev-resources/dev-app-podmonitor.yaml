@@ -3,8 +3,8 @@ kind: PodMonitor
 metadata:
   labels:
     app: file-monitor
-    release: prometheus
-  name: file-monitor
+    release: kube-prometheus-stack 
+  name: file-monitor-podmonitor
   namespace: default
 spec:
   podMetricsEndpoints:
@@ -14,3 +14,4 @@ spec:
   selector:
     matchLabels:
       app: file-monitor
+      env: dev

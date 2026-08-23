@@ -6,11 +6,11 @@ metadata:
   labels:
     app: kube-prometheus-stack
 spec:
-  project: default
+  project: dev
   source:
     repoURL: git@github.com:Prathama-sanshi/Argocd-and-Observability.git
     targetRevision: gitops-obs
-    path: Application/helm charts/kube-prometheus-stack
+    path: Application/apps/base/kube-prometheus-stack/versions/kube-prometheus-stack-88.3.0
     helm:
       valueFiles:
         - values.yaml
