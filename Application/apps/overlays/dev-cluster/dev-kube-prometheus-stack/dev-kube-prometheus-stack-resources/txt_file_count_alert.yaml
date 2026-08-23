@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: txt-file-count-alerts
-  namespace: default
+  namespace: observability
   labels:
     app: file-monitor
     release: kube-prometheus-stack 

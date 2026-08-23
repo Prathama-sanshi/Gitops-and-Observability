@@ -5,7 +5,7 @@ metadata:
     app: file-monitor
     release: kube-prometheus-stack 
   name: file-monitor-podmonitor
-  namespace: default
+  namespace: dev
 spec:
   podMetricsEndpoints:
     - interval: 15s
