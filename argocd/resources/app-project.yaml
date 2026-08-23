@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev 
+  namespace: argocd
+spec:
+  description: "Project for dev, argocd, and observability workloads"
+  
+  # 1. Allow deployments only to these specific namespaces
+  destinations:
+    - name: in-cluster
+      server: https://kubernetes.default.svc
+      namespace: dev
+    - name: in-cluster
+      server: https://kubernetes.default.svc
+      namespace: argocd
+    - name: in-cluster
+      server: https://kubernetes.default.svc 
+      namespace: observability
+    - name: in-cluster
+      server: https:kubernetes.default.svc
+      namespace: kube-system # for observability
+
+  # 2. Grant explicit permission to create and manage Namespace resources
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: Namespace
+
+
+  # 3. Allow all standard namespace-scoped resources (Deployments, Services, etc.)
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+
+  # 4. Add your allowed source repositories here
+  sourceRepos:
+    - 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
+
+
+  # 5.Allows this project to create cluster-scoped webhooks
+  clusterResourceWhitelist:
+  - group: 'admissionregistration.k8s.io'
+    kind: 'MutatingWebhookConfiguration'
+  - group: 'admissionregistration.k8s.io'
+    kind: 'ValidatingWebhookConfiguration'
+  - group: 'apiextensions.k8s.io'
+    kind: 'CustomResourceDefinition'
+  - group: 'rbac.authorization.k8s.io'
+    kind: 'ClusterRole'
+  - group: 'rbac.authorization.k8s.io'
+    kind: 'ClusterRoleBinding'
+  - group: '' # Empty string means the core/default Kubernetes group
+    kind: 'Namespace'

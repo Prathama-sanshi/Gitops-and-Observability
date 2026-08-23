@@ -55,7 +55,7 @@ spec:
         # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
         podLabels:
           app: file-monitor
-          environment: dev
+          env: dev
         
         podSecurityContext: {}
           # fsGroup: 2000
