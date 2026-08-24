@@ -4,16 +4,15 @@ metadata:
   name: dev-file-monitor
   namespace: argocd
 spec:
-  # 1. REFERENCES YOUR DEV PROJECT
-  # This matches the 'name: dev' inside your AppProject YAML
   project: dev
-
   source:
-    # 2. REFERENCES YOUR GIT REPOSITORY SECRET
-    # This must EXACTLY match the 'url:' string inside your Secret YAML
     repoURL: 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
     targetRevision: gitops-obs
-    path: Application/apps/argocd-applications
+    path: Application/apps/overlays/dev-cluster
+    
+    # 🌟 FIX: An empty kustomize block forces Kustomize mode natively,
+    # without crashing the strict decoder engine!
+    kustomize: {}
 
   destination:
     server: 'https://kubernetes.default.svc'
