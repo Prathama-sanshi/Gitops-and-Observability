@@ -1,4 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - values.yaml
+  
+# 🌟 STEP 1: Add helmGlobals to tell Kustomize where your charts live
+helmGlobals:
+  chartHome: ../../../../../helm-charts/file-monitor-charts # 👈 Path to the folder HOLDING the chart folder
+
+# 🌟 STEP 2: Use helmCharts safely without the "path" keyword choking
+helmCharts:
+  - name: file-monitor-0.1.0 # 👈 The name of the actual chart folder inside chartHome
+    releaseName: file-monitor
+    namespace: dev
+    valuesFile: values.yaml # 👈 Must sit in the exact same base folder

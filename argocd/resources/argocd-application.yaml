@@ -13,7 +13,7 @@ spec:
     # This must EXACTLY match the 'url:' string inside your Secret YAML
     repoURL: 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
     targetRevision: gitops-obs
-    path: Application/apps/overlays/dev-cluster
+    path: Application/apps/argocd-applications
 
   destination:
     server: 'https://kubernetes.default.svc'
