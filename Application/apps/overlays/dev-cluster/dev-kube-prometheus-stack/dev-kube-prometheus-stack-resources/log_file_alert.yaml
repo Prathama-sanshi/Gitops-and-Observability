@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: log-file-alert-email-routing
+  namespace: observability  # 🎯 MUST be in the same namespace as your Prometheus/Alertmanager
+  labels:
+    # This label ensures the core Alertmanager instance discovers this configuration
+    release: kube-prometheus-stack
+spec:
+  # 1. Route rules determining what triggers this email configuration
+  route:
+    groupBy: ['alertname', 'namespace']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 12h
+    receiver: 'EmailAlertReceiver'
+    # Optional: Only route alerts that come from your specific PrometheusRule name
+    matchers:
+      - name: alertname
+        regex: true
+        #This will ONLY match these two exact alert names
+        value: "HighTxtFileCount|LogFileCountAlert" 
+  # 2. Define the SMTP Mail Server and Destination details
+  receivers:
+    - name: 'EmailAlertReceiver'
+      emailConfigs:
+        - to: '01fe19bec130@kletech.ac.in'
+          sendResolved: true
+          # Outgoing Mail Server Configuration
+          smarthost: 'smtp.gmail.com:587'
+          from: 'prathamsanshi@gmail.com'
+          authUsername: 'prathamsanshi@gmail.com'
+          # References the Secret created in the step below for safety
+          authPassword:
+            name: alertmanager-smtp-credentials
+            key: password
+          tlsConfig:
+            insecureSkipVerify: false
