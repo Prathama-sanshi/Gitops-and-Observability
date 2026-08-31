@@ -6,6 +6,8 @@ metadata:
     release: kube-prometheus-stack 
   name: file-monitor-podmonitor
   namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   podMetricsEndpoints:
     - interval: 15s
