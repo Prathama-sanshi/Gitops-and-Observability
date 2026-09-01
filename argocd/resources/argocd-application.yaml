@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-file-monitor
+  namespace: argocd
+spec:
+  project: dev
+  source:
+    repoURL: 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
+    targetRevision: gitops-obs
+    path: Application/apps/overlays/dev-cluster
+    
+    # without crashing the strict decoder engine!
+    kustomize: {}
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

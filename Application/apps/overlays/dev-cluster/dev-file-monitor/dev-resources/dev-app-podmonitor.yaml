@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    app: file-monitor
+    release: kube-prometheus-stack 
+  name: file-monitor-podmonitor
+  namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  podMetricsEndpoints:
+    - interval: 15s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+      app: file-monitor
+      env: dev
