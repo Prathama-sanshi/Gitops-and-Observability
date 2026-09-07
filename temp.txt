@@ -69,3 +69,7 @@ kubectl patch configmap argocd-cm -n argocd --type merge -p '{"data":{"kustomize
 
 kubectl get configmap argocd-cm -n argocd -o yaml
 
+GitHub Actions pipeline runs on a standard ubuntu image and runner is provisioned by GitHub. 
+Sometimes the pipeline exposes logs that can contain sensitive Information. In order to secure the logs, here is a production level Architecture that will host the runners in our public cloud environment.
+
+To secure sensitive pipeline logs, you must migrate from GitHub-hosted runners to self-hosted runners isolated inside your own virtual private cloud (VPC). This design stops log data from leaving your secure network perimeter.
