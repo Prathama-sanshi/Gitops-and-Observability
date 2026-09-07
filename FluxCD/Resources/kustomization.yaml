@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: fluxcd-obs
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: "./Application/apps/base/file-monitor/versions/file-monitor-1.0.0/" # Path inside the Git repository
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: fluxcd-obs

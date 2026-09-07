@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: fluxcd-obs
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/Prathama-sanshi/Gitops-and-Observability.git
+  ref:
+    branch: fluxcd-obs
+  secretRef:
+    name: git-credentials

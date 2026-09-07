@@ -14,7 +14,7 @@ spec:
       version: "0.1.0"
       sourceRef:
         kind: GitRepository
-        name: flux-system
+        name: fluxcd-obs
         namespace: flux-system
   values:
     # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
