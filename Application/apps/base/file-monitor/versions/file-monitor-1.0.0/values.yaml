@@ -10,8 +10,7 @@ spec:
   timeout: 10m
   chart:
     spec:
-      chart: ../../../../../helm-charts/file-monitor-charts/file-monitor-0.1.0
-      version: "0.1.0"
+      chart: ./Application/helm-charts/file-monitor-charts/file-monitor-0.1.0
       sourceRef:
         kind: GitRepository
         name: fluxcd-obs
