@@ -26,4 +26,4 @@ jobs:
             --from-literal=password="mypass"
 
           echo "Verifying secret creation..."
-          kubectl get secret my-app-secret --namespace default
+          kubectl get secret my-app-secret -n default
