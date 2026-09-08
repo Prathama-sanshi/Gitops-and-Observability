@@ -21,6 +21,8 @@ jobs:
       - name: Create K8s Secret in Default Namespace
         shell: bash
         run: |
+          echo "Starting minkube server!"
+          minikube start
           echo "Checking connection to Minikube..."
           kubectl cluster-info
 
