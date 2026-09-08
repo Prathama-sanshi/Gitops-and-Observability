@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create K8s Secret in Default Namespace
+        shell: bash
         run: |
           echo "Checking connection to Minikube..."
           kubectl cluster-info
