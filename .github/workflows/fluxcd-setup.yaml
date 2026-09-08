@@ -9,6 +9,10 @@ on:
 jobs:
   local-deploy:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: "${{ github.workspace }}"
 
     steps:
       - name: Checkout Code
