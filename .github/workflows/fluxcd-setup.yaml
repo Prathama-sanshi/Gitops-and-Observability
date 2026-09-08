@@ -1,0 +1,29 @@
+name: Setup FluxCD
+
+# Trigger the workflow only on changes to the main branch
+on:
+  workflow_dispatch: # Enables the manual trigger button
+
+
+
+jobs:
+  local-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create K8s Secret in Default Namespace
+        run: |
+          echo "Checking connection to Minikube..."
+          kubectl cluster-info
+
+          echo "Creating the new secret..."
+          # Creates a generic secret named 'my-app-secret' with a key named 'password'
+          kubectl create secret generic my-app-secret \
+            --namespace default \
+            --from-literal=password="mypass"
+
+          echo "Verifying secret creation..."
+          kubectl get secret my-app-secret --namespace default
