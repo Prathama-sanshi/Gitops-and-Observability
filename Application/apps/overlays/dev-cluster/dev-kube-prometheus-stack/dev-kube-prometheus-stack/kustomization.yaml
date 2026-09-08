@@ -6,5 +6,5 @@ resources:
 patches:
   - path: values-dev.yaml
     target:
-      kind: Application
+      kind: HelmRelease
       name: kube-prometheus-stack

@@ -8,5 +8,5 @@ resources:
 patches:
   - path: dev-values.yaml
     target:
-      kind: Application
+      kind: HelmRelease
       name: file-monitor
