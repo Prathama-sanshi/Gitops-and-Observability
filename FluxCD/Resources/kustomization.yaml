@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./Application/apps/base/file-monitor/versions/file-monitor-1.0.0/" # Path inside the Git repository
+  path: "./Application/apps/overlays/dev-cluster/" # Path inside the Git repository
   prune: true
   sourceRef:
     kind: GitRepository

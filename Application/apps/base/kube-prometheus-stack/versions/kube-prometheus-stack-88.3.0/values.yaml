@@ -10,7 +10,7 @@ spec:
   timeout: 10m
   chart:
     spec:
-      chart: ./Application/helm-charts/kube-prometheus-stack/kube-prometheus-stack-88.3.0
+      chart: ./Application/helm-charts/kube-prometheus-stack
       sourceRef:
         kind: GitRepository
         name: fluxcd-obs
