@@ -1,4 +1,4 @@
-name: GitOps Deployment
+name: FluxCD - Gitops Deployment
 
 on:
   workflow_dispatch:
