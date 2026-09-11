@@ -21,7 +21,7 @@ jobs:
           helm uninstall fluxcd -n flux-system
           flux delete source git fluxcd-obs -n flux-system --silent
           flux delete kustomization fluxcd-obs -n flux-system --silent
-          kubectl delete namespace flux-system
+          kubectl get namespace flux-system -o json | tr -d "\n" | sed "s/\"finalizers\": \[[^]]*\]/\"finalizers\": []/" | kubectl replace --raw /api/v1/namespaces/flux-system/finalize -f -
           minikube stop
          
 
