@@ -1,0 +1,27 @@
+name: Uninstall Flux - cleanup
+
+on:
+  workflow_dispatch: # Enables the manual trigger button
+
+
+
+jobs:
+  flux-uninstall:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: "${{ github.workspace }}"
+
+    steps:
+      - name: pre-check
+        shell: bash
+        run: |
+          minikube start
+          helm uninstall fluxcd -n flux-system
+          flux delete source git fluxcd-obs -n flux-system --silent
+          flux delete kustomization fluxcd-obs -n flux-system --silent
+          kubectl delete flux-system
+         
+
+
