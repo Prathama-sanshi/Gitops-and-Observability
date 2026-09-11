@@ -44,14 +44,14 @@ jobs:
             sed -i 's/  - dev-kube-prometheus-stack/#  - dev-kube-prometheus-stack/' kustomization.yaml
           fi
 
-          if ${{ inputs.undeploy_file_monitor }} == "true" ; then
+          if ${{ inputs.undeploy_file_monitor }} == "true" and ${{ inputs.undeploy_observability }} == "false" ; then
             echo "Undeploying file monitor"
             sed -i 's/  - dev-file-monitor/#  - dev-file-monitor/' kustomization.yaml
             if grep -rnE "^\s*#\s*- dev-kube-prometheus-stack" . ; then
               sed -i 's/#*[[:space:]]*resources:/#resources:/' kustomization.yaml
             fi
           fi
-          if ${{ inputs.undeploy_observability }} == "true" ; then
+          if ${{ inputs.undeploy_observability }} == "true" and ${{ inputs.undeploy_file_monitor }} == "false"; then
             echo "Undeploying observability"
             sed -i 's/  - dev-kube-prometheus-stack/#  - dev-kube-prometheus-stack/' kustomization.yaml
             if grep -rnE "^\s*#\s*- dev-file-monitor" . ; then
