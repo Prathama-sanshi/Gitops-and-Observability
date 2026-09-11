@@ -24,6 +24,7 @@ jobs:
          minikube start
 
   deploy-flux:
+    needs: sanity-check
     runs-on: self-hosted
     defaults:
       run:
@@ -38,8 +39,8 @@ jobs:
       - name: helm install fluxcd
         run: |
           echo "Installing FluxCD..."
-          cd Gitops-and-Observability/FluxCD/Helm-chart/flux2/
           pwd
+          cd FluxCD/Helm-chart/flux2/
           echo "Patching existing Flux CRDs to allow Helm adoption..."
           # 1. Get all CRDs containing 'fluxcd.io'
           # 2. Add the tracking label Helm requires
