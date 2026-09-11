@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-  local-deploy:
+  Sanity check:
     runs-on: self-hosted
     defaults:
       run:
@@ -15,22 +15,50 @@ jobs:
         working-directory: "${{ github.workspace }}"
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Create K8s Secret in Default Namespace
+      - name: pre-check
         shell: bash
         run: |
-          echo "Starting minkube server!"
-          minikube start
-          echo "Checking connection to Minikube..."
-          kubectl cluster-info
+         flux --version     #flux version 2.9.5 or above
+         docker --version   #Docker version 29.3.0 or above
+         minikube version   #minikube version: v1.38.0 or above
+         minikube start
 
-          echo "Creating the new secret..."
-          # Creates a generic secret named 'my-app-secret' with a key named 'password'
-          kubectl create secret generic my-app-secret \
-            --namespace default \
-            --from-literal=password="mypass"
+  Deploy flux:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: "${{ github.workspace }}"
+    
+    steps:
+      - name: Checkout Specific Branch
+        uses: actions/checkout@v4
+        with:
+          ref: fluxcd-obs 
+      - name: helm install fluxcd
+        run: |
+          echo "Installing FluxCD..."
+          cd Gitops-and-Observability/FluxCD/Helm-chart/flux2/
+          pwd
+          echo "Patching existing Flux CRDs to allow Helm adoption..."
+          # 1. Get all CRDs containing 'fluxcd.io'
+          # 2. Add the tracking label Helm requires
+          # 3. Add the tracking annotations Helm requires
+          for crd in $(kubectl get crd -o jsonpath='{.items[*].metadata.name}' | tr ' ' '\n' | grep 'fluxcd.io'); do
+              echo "Adopting CRD: $crd"
+              kubectl label crd "$crd" app.kubernetes.io/managed-by=Helm --overwrite
+              kubectl annotate crd "$crd" meta.helm.sh/release-name=fluxcd meta.helm.sh/release-namespace=flux-system --overwrite
+          done
 
-          echo "Verifying secret creation..."
-          kubectl get secret my-app-secret -n default
+          helm upgrade --install fluxcd . \
+            -f values.yaml \
+            -n flux-system \
+            --create-namespace \
+            --force
+
+          cd ../../Resources
+          pwd
+          kubectl apply -f GitRepository.yaml
+          kubectl create secret generic git-credentials -n flux-system --from-literal=username=oauth2 --from-literal=password=${{ secrets.GITHUB_TOKEN }}
+          kubectl apply -f kustomization.yaml
+          echo "FluxCD setup completed!"
