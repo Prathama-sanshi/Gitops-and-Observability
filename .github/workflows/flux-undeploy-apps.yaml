@@ -21,7 +21,7 @@ on:
         default: true
 
 jobs:
-  deploy-apps:
+  undeploy-apps:
     runs-on: self-hosted
     permissions:
       contents: write
@@ -44,14 +44,14 @@ jobs:
             sed -i 's/  - dev-kube-prometheus-stack/#  - dev-kube-prometheus-stack/' kustomization.yaml
           fi
 
-          if ${{ inputs.deploy_file_monitor }} == "true" ; then
+          if ${{ inputs.undeploy_file_monitor }} == "true" ; then
             echo "Undeploying file monitor"
             sed -i 's/  - dev-file-monitor/#  - dev-file-monitor/' kustomization.yaml
             if grep -rnE "^\s*#\s*- dev-kube-prometheus-stack" . ; then
               sed -i 's/#*[[:space:]]*resources:/#resources:/' kustomization.yaml
             fi
           fi
-          if ${{ inputs.deploy_observability }} == "true" ; then
+          if ${{ inputs.undeploy_observability }} == "true" ; then
             echo "Undeploying observability"
             sed -i 's/  - dev-kube-prometheus-stack/#  - dev-kube-prometheus-stack/' kustomization.yaml
             if grep -rnE "^\s*#\s*- dev-file-monitor" . ; then
@@ -61,7 +61,7 @@ jobs:
           cat kustomization.yaml
           #commit and push the changes
           git add kustomization.yaml
-          git commit -m "Deploy Apps $(date)"
+          git commit -m "Undeploy Apps $(date)"
           echo "Changes committed successfully : msg - $(git log --oneline -1)"
           git push origin HEAD:fluxcd-obs
           echo "push successful"
