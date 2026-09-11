@@ -1,0 +1,51 @@
+name: Setup ArgoCD
+
+# Trigger the workflow only on changes to the main branch
+on:
+  workflow_dispatch: # Enables the manual trigger button
+
+
+jobs:
+  sanity-check:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: "${{ github.workspace }}"
+
+    steps:
+      - name: pre-check
+        shell: bash
+        run: |
+         minikube start
+         argocd version     #argocd version  v3.5.1+109ca7c or above
+         docker --version   #Docker version 29.3.0 or above
+         minikube version   #minikube version: v1.38.0 or above
+         minikube start
+
+  deploy-argocd:
+    needs: sanity-check
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: "${{ github.workspace }}"
+    
+    steps:
+      - name: Checkout Specific Branch
+        uses: actions/checkout@v4
+        with:
+          ref: argocd-obs 
+      - name: helm install argocd
+        run: |
+          echo "Installing ArgoCD..."
+          pwd
+          cd argocd/helm-charts/
+          helm install argocd . -f value.yaml -n argocd --create-namespace
+
+          cd ../resources/
+          pwd
+
+          kubectl apply -f app-project.yaml
+          kubectl apply -f argocd-application.yaml
+          echo "ArgoCD setup completed!"
