@@ -3,4 +3,4 @@ kind: Kustomization
 buildMetadata: [ originAnnotations ]
 resources:
   - dev-file-monitor
-#  - dev-kube-prometheus-stack
+  - dev-kube-prometheus-stack
