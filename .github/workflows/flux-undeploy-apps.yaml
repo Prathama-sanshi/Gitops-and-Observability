@@ -1,4 +1,4 @@
-name: FluxCD - Gitops Deployment
+name: FluxCD - Gitops Undeployment
 
 on:
   workflow_dispatch:
