@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-  Sanity check:
+  sanity-check:
     runs-on: self-hosted
     defaults:
       run:
@@ -23,7 +23,7 @@ jobs:
          minikube version   #minikube version: v1.38.0 or above
          minikube start
 
-  Deploy flux:
+  deploy-flux:
     runs-on: self-hosted
     defaults:
       run:
