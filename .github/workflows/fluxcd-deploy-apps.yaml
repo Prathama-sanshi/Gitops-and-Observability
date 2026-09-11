@@ -1,0 +1,52 @@
+name: GitOps Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
+      deploy_file_monitor:
+        description: 'Deploy File monitoring application'
+        type: boolean
+        default: true
+      deploy_observability:
+        description: 'Deploy observability'
+        type: boolean
+        default: false
+
+jobs:
+  deploy-apps:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Specific Branch
+        uses: actions/checkout@v4
+        with:
+          ref: fluxcd-obs 
+    
+      - name: Deploy apps
+        run: |
+          cd Application/apps/overlays/dev-cluster/
+          cat kustomization.yaml
+          if ${{ inputs.deploy_file_monitor }} == "true" ; then
+            echo "Deploying file monitor"
+            sed -i 's/^#[[:space:]]*resources:/resources:/' kustomization.yaml  
+            sed -i 's/^#[[:space:]]*- dev-file-monitor/  - dev-file-monitor/' kustomization.yaml
+          fi
+          if ${{ inputs.deploy_observability }} == "true" ; then
+            echo "Deploying observability"
+            sed -i 's/^#[[:space:]]*resources:/resources:/' kustomization.yaml  
+            sed -i 's/^#[[:space:]]*- dev-kube-prometheus-stack/  - dev-kube-prometheus-stack/' kustomization.yaml
+          fi
+          cat kustomization.yaml
+          #commit and push the changes
+          git add kustomization.yaml
+          git commit -m "Deploy Apps $(date)"
+          echo "Changes committed successfully : msg - $(git log --oneline -1)"
+          git push origin HEAD:fluxcd-obs
+          echo "push successful"
