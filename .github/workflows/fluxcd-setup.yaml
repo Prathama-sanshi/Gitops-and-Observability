@@ -59,6 +59,7 @@ jobs:
 
           cd ../../Resources
           pwd
+          flux install #install crd
           kubectl apply -f GitRepository.yaml
           kubectl delete secret git-credentials --ignore-not-found=true
           kubectl create secret generic git-credentials -n flux-system --from-literal=username=oauth2 --from-literal=password=${{ secrets.GITHUB_TOKEN }}
