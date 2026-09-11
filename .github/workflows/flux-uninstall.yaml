@@ -14,14 +14,15 @@ jobs:
         working-directory: "${{ github.workspace }}"
 
     steps:
-      - name: pre-check
+      - name: flux-clean-up
         shell: bash
         run: |
           minikube start
           helm uninstall fluxcd -n flux-system
           flux delete source git fluxcd-obs -n flux-system --silent
           flux delete kustomization fluxcd-obs -n flux-system --silent
-          kubectl delete flux-system
+          kubectl delete namespace flux-system
+          minikube stop
          
 
 
