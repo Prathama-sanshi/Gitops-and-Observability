@@ -32,7 +32,7 @@ jobs:
           ref: fluxcd-obs 
     
       - name: Undeploy apps
-        run: |
+        run: | 
           git config --global user.email "psanshi@example.com"
           git config --global user.name "psanshi"
           cd Application/apps/overlays/dev-cluster/
