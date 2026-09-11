@@ -40,7 +40,7 @@ jobs:
           echo "Installing ArgoCD..."
           pwd
           cd argocd/helm-charts/
-          helm install argocd . -f value.yaml -n argocd --create-namespace
+          helm install argocd . -f values.yaml -n argocd --create-namespace
 
           cd ../resources/
           pwd
