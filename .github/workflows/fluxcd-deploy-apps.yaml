@@ -23,6 +23,8 @@ on:
 jobs:
   deploy-apps:
     runs-on: self-hosted
+    permissions:
+      contents: write
     steps:
       - name: Checkout Specific Branch
         uses: actions/checkout@v4
