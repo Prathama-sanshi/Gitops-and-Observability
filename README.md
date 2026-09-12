@@ -12,21 +12,24 @@
         * This will preform the sanity check for docker, minikube and fluxcd cli versions.
         * This will helm install fluxcd in flux-system namespace.
         * You can verify by doing kubectl get pods -n flux-system
-        * This creates gitrepository CRD and its secret along with kustomization CRD.
-        * It uses Kustomization CRD path to watch the changes in repository.
+        * This creates gitrepository CR and its secret along with kustomization CR.
+        * It uses Kustomization CR path to watch the changes in repository.
     * Step: 2.Run Pipeline FluxCD Gitops Deployment.
         * This will clone the flucd-obs repo
-        * And uncomments the desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
-        * When FluxCD kustomization renders the charts, it see the helmrelease and deployes in the cluster.
-        * The Application gets deployed via FluxCD.
+        * It uncomments out entry of desired application(pipeline inputes) under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
+        * When FluxCD reconciles the Kustomization, it processes the referenced HelmRelease resources and deploys the application to the Kubernetes cluster.
+        * The application is then automatically deployed and managed by FluxCD.
     * Step: 3.Run Pipeline FluxCD Gitops Undeployment
         * This will clone the flucd-obs repo
-        * And comments the desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
+        * And comments out entry of desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
         * When FluxCD kustomization renders the charts, it picks the changes and applies it to cluster (deletes if not present)
-        * The Application gets deployed via ArgoCD.
+        * During the next reconciliation cycle, FluxCD detects the change and updates the cluster state accordingly.
+        * Resources that are no longer referenced are removed from the cluster.
+        * The application is successfully undeployed by FluxCD.
     * Step: 4.Run Pipeline Flux Uninstall - cleanup
         * This will helm uninstall the FluxCD
-        * Delete the Flux resources.
+        * Delete the FluxCD Custom Resources and related configurations.
+        * Cleans up all Flux-managed resources to restore the cluster to its pre-installation state.
 
 ### 🚀 GitOps & Observability
 
