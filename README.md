@@ -84,6 +84,14 @@ Whenever you are running GitHub pipeline use this below command to host your run
 <img width="768" height="75" alt="image" src="https://github.com/user-attachments/assets/df87e569-38ed-4c77-8e6b-6da49163b4f7" />
 
 
+4] Un-deploy Scenario: 
+* As soon as the flux picks the latest commit, the pod goes into terminating state
+<img width="1699" height="134" alt="image" src="https://github.com/user-attachments/assets/566d21c0-4806-4d1f-b5e7-c4a7591d3915" />
+
+<img width="1079" height="97" alt="image" src="https://github.com/user-attachments/assets/bd6fa97d-cabe-4134-803f-9289e7a00e67" />
+
+
+
 ## 2.Deploy Application via ArgoCD
 * To deploy custom application (file-monitor) and observability via ArgoCD follow the following steps:
     * Step: 1.Run Pipeline ArgoCD Setup
