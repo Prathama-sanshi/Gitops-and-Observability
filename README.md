@@ -101,3 +101,6 @@ Whenever you are running GitHub pipeline use this below command to host your run
           
 Helmrelease and architectural pattern alongside **Kustomize-based** environment overlays for developments is used.
 
+# Observability Dashboards
+* Grafana Dashboard:
+<img width="1586" height="818" alt="image" src="https://github.com/user-attachments/assets/4ba9fa75-efc1-4e3d-b187-d927dc4b433f" />
