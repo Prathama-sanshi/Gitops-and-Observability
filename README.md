@@ -24,26 +24,27 @@ ArgoCD Directory Structure
 │   │   │               ├── kustomization.yaml
 │   │   │               └── values.yaml
 │   │   └── overlays
-│   │       └── dev-cluster
-│   │           ├── dev-file-monitor
-│   │           │   ├── dev-app
-│   │           │   │   ├── dev-values.yaml
-│   │           │   │   └── kustomization.yaml
-│   │           │   ├── dev-resources
-│   │           │   │   ├── dev-app-podmonitor.yaml
-│   │           │   │   └── kustomization.yaml
-│   │           │   └── kustomization.yaml
-│   │           ├── dev-kube-prometheus-stack
-│   │           │   ├── dev-kube-prometheus-stack
-│   │           │   │   ├── kustomization.yaml
-│   │           │   │   └── values-dev.yaml
-│   │           │   ├── dev-kube-prometheus-stack-resources
-│   │           │   │   ├── dashboard-1786864897559.json
-│   │           │   │   ├── kustomization.yaml
-│   │           │   │   ├── log_file_count_alert.yaml
-│   │           │   │   └── txt_file_count_alert.yaml
-│   │           │   └── kustomization.yaml
-│   │           └── kustomization.yaml
+│   │       ├── dev-cluster
+│   │       |    ├── dev-file-monitor
+│   │       |    │   ├── dev-app
+│   │       |    │   │   ├── dev-values.yaml
+│   │       |    │   │   └── kustomization.yaml
+│   │       |    │   ├── dev-resources
+│   │       |    │   │   ├── dev-app-podmonitor.yaml
+│   │       |    │   │   └── kustomization.yaml
+│   │       |    │   └── kustomization.yaml
+│   │       |    ├── dev-kube-prometheus-stack
+│   │       |    │   ├── dev-kube-prometheus-stack
+│   │       |    │   │   ├── kustomization.yaml
+│   │       |    │   │   └── values-dev.yaml
+│   │       |    │   ├── dev-kube-prometheus-stack-resources
+│   │       |    │   │   ├── dashboard-1786864897559.json
+│   │       |    │   │   ├── kustomization.yaml
+│   │       |    │   │   ├── log_file_count_alert.yaml
+│   │       |    │   │   └── txt_file_count_alert.yaml
+│   │       |    │   └── kustomization.yaml
+│   │       |    └── kustomization.yaml
+|   |       └── prod-cluster/.. #same structure as  dev-cluster # kept for extensibility (multi environment/cluster)
 │   └── helm-charts
 │       ├── file-monitor-charts
 │       │   └── file-monitor-0.1.0
@@ -59,16 +60,16 @@ ArgoCD Directory Structure
 │           └── values.yaml
 ├── README.md
 └── argocd
-├── helm-charts
-│   ├── Chart.lock
-│   ├── Chart.yaml
-│   ├── README.md
-│   ├── charts
-│   ├── templates
-│   └── values.yaml
-└── resources
-    ├── app-project.yaml
-    ├── argocd-application.yaml
-    └── argocd-repo-secret.yaml
+    ├── helm-charts
+    │   ├── Chart.lock
+    │   ├── Chart.yaml
+    │   ├── README.md
+    │   ├── charts
+    │   ├── templates
+    │   └── values.yaml
+    └── resources
+        ├── app-project.yaml
+        ├── argocd-application.yaml
+        └── argocd-repo-secret.yaml
 
 ```
