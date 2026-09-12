@@ -33,8 +33,8 @@ jobs:
     
       - name: Undeploy apps
         run: | 
-          git config --global user.email "psanshi@example.com"
-          git config --global user.name "psanshi"
+          git config --global user.email "pipeline@example.com"
+          git config --global user.name "pipeline"
           cd Application/apps/overlays/dev-cluster/
           cat kustomization.yaml
           if ${{ inputs.undeploy_file_monitor }} == "true" and ${{ inputs.undeploy_observability }} == "true" ; then
