@@ -5,6 +5,29 @@
 * FluxCD CLI version: 2.9.5 or higher (Helm chart: 2.19.0)
 * ArgoCD CLI version: v3.5.1+109ca7c (Helm chart:  10.3.3)
 
+### 🚀 Introduction:
+# 1.Deploy Application via FluxCD
+* To deploy custom application (file-monitor) and observability via FluxCD follow the following steps:
+    * Step: 1.Run Pipeline FluxCD Setup
+        * This will preform the sanity check for docker, minikube and fluxcd cli versions.
+        * This will helm install fluxcd in flux-system namespace.
+        * You can verify by doing kubectl get pods -n flux-system
+        * This creates gitrepository CRD and its secret along with kustomization CRD.
+        * It uses Kustomization CRD path to watch the changes in repository.
+    * Step: 2.Run Pipeline FluxCD Gitops Deployment.
+        * This will clone the flucd-obs repo
+        * And uncomments the desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
+        * When FluxCD kustomization renders the charts, it see the helmrelease and deployes in the cluster.
+        * The Application gets deployed via FluxCD.
+    * Step: 3.Run Pipeline FluxCD Gitops Undeployment
+        * This will clone the flucd-obs repo
+        * And comments the desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
+        * When FluxCD kustomization renders the charts, it picks the changes and applies it to cluster (deletes if not present)
+        * The Application gets deployed via ArgoCD.
+    * Step: 4.Run Pipeline Flux Uninstall - cleanup
+        * This will helm uninstall the FluxCD
+        * Delete the Flux resources.
+
 ### 🚀 GitOps & Observability
 
 * **Prometheus Instrumentation:** Developed a Python file-monitoring application using the **Prometheus client library** to expose custom application metrics on /metrics via port 8000.
