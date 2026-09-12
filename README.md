@@ -90,6 +90,8 @@ Whenever you are running GitHub pipeline use this below command to host your run
 
 <img width="1079" height="97" alt="image" src="https://github.com/user-attachments/assets/bd6fa97d-cabe-4134-803f-9289e7a00e67" />
 
+5] self-hosted runner logs:
+<img width="1038" height="485" alt="image" src="https://github.com/user-attachments/assets/e921a683-e5a5-4346-80b1-9d40643ea9ef" />
 
 
 ## 2.Deploy Application via ArgoCD
