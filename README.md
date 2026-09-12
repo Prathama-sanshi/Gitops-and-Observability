@@ -2,8 +2,8 @@
 * WSL version: 2.7.13.0 or higher
 * Docker version: 29.3.0 or higher
 * Minikube version: v1.38.0  or higher
-* FluxCD version: 2.9.5 or higher (Helm chart: 2.19.0)
-* ArgoCD version: v3.5.1+109ca7c (Helm chart:  10.3.3)
+* FluxCD CLI version: 2.9.5 or higher (Helm chart: 2.19.0)
+* ArgoCD CLI version: v3.5.1+109ca7c (Helm chart:  10.3.3)
 
 ### 🚀 GitOps & Observability
 
