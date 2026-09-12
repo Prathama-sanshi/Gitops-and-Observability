@@ -26,7 +26,7 @@
         * During the next reconciliation cycle, FluxCD detects the change and updates the cluster state accordingly.
         * Resources that are no longer referenced are removed from the cluster.
         * The application is successfully undeployed by FluxCD.
-    * Step: 4.Run Pipeline Flux Uninstall - cleanup
+    * Step: 4.Run Pipeline FluxCD Uninstall - cleanup
         * This will helm uninstall the FluxCD
         * Delete the FluxCD Custom Resources and related configurations.
         * Cleans up all Flux-managed resources to restore the cluster to its pre-installation state.
@@ -46,16 +46,17 @@
         * When ArgoCD reconciles the Kustomization, it processes the referenced Application resources and deploys the application to the Kubernetes cluster.
         * The application is then automatically deployed and managed by ArgoCD.
     * Step: 3.Run Pipeline ArgoCD Gitops Undeployment
-        * This will clone the flucd-obs repo
+        * This will clone the argocd-obs repo
         * And comments out entry of desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
-        * When FluxCD kustomization renders the charts, it picks the changes and applies it to cluster (deletes if not present)
-        * During the next reconciliation cycle, FluxCD detects the change and updates the cluster state accordingly.
+        * When argocd kustomization renders the charts, it picks the changes and applies it to cluster (deletes if not present)
+        * During the next reconciliation cycle, argocd detects the change and updates the cluster state accordingly.
         * Resources that are no longer referenced are removed from the cluster.
-        * The application is successfully undeployed by FluxCD.
-    * Step: 4.Run Pipeline Flux Uninstall - cleanup
-        * This will helm uninstall the FluxCD
-        * Delete the FluxCD Custom Resources and related configurations.
-        * Cleans up all Flux-managed resources to restore the cluster to its pre-installation state.
+        * The application is successfully undeployed by argocd.
+    * Step: 4.Run Pipeline Argocd Uninstall - cleanup
+        * This will helm uninstall the ArgoCD
+        * Delete the ArgoCD Custom Resources and related configurations.
+        * Cleans up all argocd-managed resources to restore the cluster to its pre-installation state.
+          
 ### 🚀 GitOps & Observability
 
 * **Prometheus Instrumentation:** Developed a Python file-monitoring application using the **Prometheus client library** to expose custom application metrics on /metrics via port 8000.
