@@ -1,0 +1,10 @@
+#Step: 1 Get Prometheus URL
+kubectl port-forward svc/kube-prometheus-stack-prometheus 9090:9090 -n observability
+http://localhost:9090
+
+#Step : 2 Get Grafana URL
+secret:
+kubectl get secret --namespace observability -l app.kubernetes.io/component=admin-secret -o jsonpath="{.items[0].data.admin-password}" | base64 --decode ; echo
+kubectl --namespace observability port-forward svc/kube-prometheus-stack-grafana 3000:80
+http://localhost:3000
+(upload dashboard json file)
