@@ -6,7 +6,7 @@ metadata:
 spec:
   description: "Project for dev, argocd, and observability workloads"
   
-  # 1. Allow deployments only to these specific namespaces
+  # 1. Allow deployments only to these specific destination namespaces
   destinations:
     - name: in-cluster
       server: https://kubernetes.default.svc
@@ -18,36 +18,29 @@ spec:
       server: https://kubernetes.default.svc 
       namespace: observability
     - name: in-cluster
-      server: https:kubernetes.default.svc
-      namespace: kube-system # for observability
+      server: https://kubernetes.default.svc  # Fixed: Added missing //
+      namespace: kube-system
 
-  # 2. Grant explicit permission to create and manage Namespace resources
+  # 2. Combined and structured Cluster-Scoped resource permissions
   clusterResourceWhitelist:
-    - group: "*"
+    - group: ""  # Empty string allows the core/default Kubernetes group (Namespaces, Nodes, etc.)
       kind: Namespace
-
+    - group: "admissionregistration.k8s.io"
+      kind: MutatingWebhookConfiguration
+    - group: "admissionregistration.k8s.io"
+      kind: ValidatingWebhookConfiguration
+    - group: "apiextensions.k8s.io"
+      kind: CustomResourceDefinition
+    - group: "rbac.authorization.k8s.io"
+      kind: ClusterRole
+    - group: "rbac.authorization.k8s.io"
+      kind: ClusterRoleBinding
 
   # 3. Allow all standard namespace-scoped resources (Deployments, Services, etc.)
   namespaceResourceWhitelist:
     - group: "*"
       kind: "*"
 
-  # 4. Add your allowed source repositories here
+  # 4. Allowed source repositories
   sourceRepos:
     - 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
-
-
-  # 5.Allows this project to create cluster-scoped webhooks
-  clusterResourceWhitelist:
-  - group: 'admissionregistration.k8s.io'
-    kind: 'MutatingWebhookConfiguration'
-  - group: 'admissionregistration.k8s.io'
-    kind: 'ValidatingWebhookConfiguration'
-  - group: 'apiextensions.k8s.io'
-    kind: 'CustomResourceDefinition'
-  - group: 'rbac.authorization.k8s.io'
-    kind: 'ClusterRole'
-  - group: 'rbac.authorization.k8s.io'
-    kind: 'ClusterRoleBinding'
-  - group: '' # Empty string means the core/default Kubernetes group
-    kind: 'Namespace'
