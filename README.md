@@ -72,6 +72,16 @@ Whenever you are running GitHub pipeline use this below command to host your run
         * This will helm uninstall the FluxCD
         * Delete the FluxCD Custom Resources and related configurations.
         * Cleans up all Flux-managed resources to restore the cluster to its pre-installation state.
+### Result After Deployment :
+1] See HelmRelease in flux-system namespace
+<img width="1699" height="118" alt="image" src="https://github.com/user-attachments/assets/c08bd6c3-e962-4c22-9f84-65c6087fdda7" />
+
+2] Verify Pods:
+<img width="1014" height="98" alt="image" src="https://github.com/user-attachments/assets/276985ff-9f05-4e5a-9060-05ad02ebc5bb" />
+
+3]Verify App Resources:
+
+<img width="768" height="75" alt="image" src="https://github.com/user-attachments/assets/df87e569-38ed-4c77-8e6b-6da49163b4f7" />
 
 
 ## 2.Deploy Application via ArgoCD
