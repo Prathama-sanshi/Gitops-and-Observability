@@ -114,3 +114,9 @@ Helmrelease and architectural pattern alongside **Kustomize-based** environment 
 # Observability Dashboards
 * Grafana Dashboard:
 <img width="1586" height="818" alt="image" src="https://github.com/user-attachments/assets/4ba9fa75-efc1-4e3d-b187-d927dc4b433f" />
+* Prometheus Alerts:
+<img width="1597" height="644" alt="image" src="https://github.com/user-attachments/assets/91aa1dcc-71ae-44dd-86d4-906a7d124219" />
+* Prometheus Targets:
+<img width="1593" height="357" alt="image" src="https://github.com/user-attachments/assets/c44f87dd-46b4-4ea8-9bbd-01bc9d6fe349" />
+
+
