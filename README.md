@@ -5,7 +5,7 @@ A sample application that has custom metrics and pushes to kube-prometheus-stack
 Directory Structure:
 
 
-# FLUX Directory Structure :
+# Directory Structure of Application deployment via FluxCD:
 
 ```text
 fluxcd-obs/
