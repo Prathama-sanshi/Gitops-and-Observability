@@ -1,0 +1,22 @@
+name: ArgoCD Uninstall  - cleanup
+
+on:
+  workflow_dispatch: # Enables the manual trigger button
+
+jobs:
+  argocd-uninstall:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: "${{ github.workspace }}"
+
+    steps:
+      - name: argocd-clean-up
+        shell: bash
+        run: |
+          minikube start
+          helm uninstall argocd -n argocd
+          kubectl delete app --all -n argocd
+          kubectl delete appproject --all -n argocd
+          minikube stop
