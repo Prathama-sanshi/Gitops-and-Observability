@@ -1,3 +1,7 @@
+# 🚀 Introduction:
+
+This repository demonstrates a complete GitOps-driven Kubernetes deployment platform running on WSL. It showcases the deployment of a custom Prometheus-instrumented application, a production-ready observability stack, and automated infrastructure management using both ArgoCD and FluxCD(check branches). The project leverages Helm, Kustomize, GitHub Actions self-hosted runners, and GitOps best practices to enable consistent, automated application delivery and lifecycle management.
+
 ### 🚀 GitOps & Observability
 
 * **Prometheus Instrumentation:** Developed a Python file-monitoring application using the **Prometheus client library** to expose custom application metrics on /metrics via port 8000.
@@ -43,7 +47,7 @@ Whenever you are running GitHub pipeline use this below command to host your run
 
 <img width="595" height="155" alt="image" src="https://github.com/user-attachments/assets/38c4425f-9d14-434f-af66-69ce07dcf8e3" />
 
-### 🚀 Introduction:
+
 ## 1.Deploy Application via FluxCD
 * To deploy custom application (file-monitor) and observability via FluxCD follow the following steps:
     * Step: 1.Run Pipeline FluxCD Setup
