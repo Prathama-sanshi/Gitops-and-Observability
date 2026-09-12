@@ -15,28 +15,30 @@ ArgoCD Directory Structure
 │   │   ├── base
 │   │   │   ├── file-monitor
 │   │   │   │   └── versions
-│   │   │   │       └── file-monitor-1.0.0
-│   │   │   │           ├── kustomization.yaml
-│   │   │   │           └── values.yaml
+│   │   │   │       └── file-monitor-1.0.0      #current file-monitor version
+│   │   │   │       |   ├── kustomization.yaml
+│   │   │   │       |    └── values.yaml
+|   |   |   |       └── file-monitor-2.0.0 /..  # if new version comes! Extensibility
 │   │   │   └── kube-prometheus-stack
 │   │   │       └── versions
-│   │   │           └── kube-prometheus-stack-88.3.0
-│   │   │               ├── kustomization.yaml
-│   │   │               └── values.yaml
+│   │   │           └── kube-prometheus-stack-88.3.0   #current version
+│   │   │           |    ├── kustomization.yaml
+│   │   │           |    └── values.yaml
+|   |   |           └── kube-prometheus-stack-89.0.0/ ...  #if new version comes! Extensibility
 │   │   └── overlays
 │   │       ├── dev-cluster
 │   │       |    ├── dev-file-monitor
 │   │       |    │   ├── dev-app
-│   │       |    │   │   ├── dev-values.yaml
-│   │       |    │   │   └── kustomization.yaml
+│   │       |    │   │   ├── dev-values.yaml            # dev configuration patch
+│   │       |    │   │   └── kustomization.yaml         <- points to base desired values.yaml version
 │   │       |    │   ├── dev-resources
 │   │       |    │   │   ├── dev-app-podmonitor.yaml
 │   │       |    │   │   └── kustomization.yaml
 │   │       |    │   └── kustomization.yaml
 │   │       |    ├── dev-kube-prometheus-stack
 │   │       |    │   ├── dev-kube-prometheus-stack
-│   │       |    │   │   ├── kustomization.yaml
-│   │       |    │   │   └── values-dev.yaml
+│   │       |    │   │   ├── kustomization.yaml          <- points to base desired values.yaml version
+│   │       |    │   │   └── values-dev.yaml             # dev configuration patch 
 │   │       |    │   ├── dev-kube-prometheus-stack-resources
 │   │       |    │   │   ├── dashboard-1786864897559.json
 │   │       |    │   │   ├── kustomization.yaml
@@ -59,7 +61,7 @@ ArgoCD Directory Structure
 │           ├── templates
 │           └── values.yaml
 ├── README.md
-└── argocd
+└── argocd          # This is used to deploy argocd in cluster with its resources
     ├── helm-charts
     │   ├── Chart.lock
     │   ├── Chart.yaml
