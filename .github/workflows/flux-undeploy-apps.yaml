@@ -61,7 +61,7 @@ jobs:
           cat kustomization.yaml
           #commit and push the changes
           git add kustomization.yaml
-          git commit -m "Undeploy Apps $(date)"
+          git commit -m "Undeploy Apps via FluxCD $(date)"
           echo "Changes committed successfully : msg - $(git log --oneline -1)"
           git push origin HEAD:fluxcd-obs
           echo "push successful"

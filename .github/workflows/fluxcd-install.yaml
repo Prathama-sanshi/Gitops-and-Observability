@@ -1,4 +1,4 @@
-name: Setup FluxCD
+name: FluxCD Setup 
 
 # Trigger the workflow only on changes to the main branch
 on:

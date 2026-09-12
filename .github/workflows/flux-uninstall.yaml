@@ -1,4 +1,4 @@
-name: Uninstall Flux - cleanup
+name: Flux Uninstall  - cleanup
 
 on:
   workflow_dispatch: # Enables the manual trigger button

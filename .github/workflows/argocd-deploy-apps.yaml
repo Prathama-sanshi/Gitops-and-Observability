@@ -1,4 +1,4 @@
-name: FluxCD - Gitops Deployment
+name: ArgoCD - Gitops Deployment
 
 on:
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
       - name: Checkout Specific Branch
         uses: actions/checkout@v4
         with:
-          ref: fluxcd-obs 
+          ref: argocd-obs 
     
       - name: Deploy apps
         run: |
@@ -50,7 +50,7 @@ jobs:
           cat kustomization.yaml
           #commit and push the changes
           git add kustomization.yaml
-          git commit -m "Deploy Apps via FluxCD $(date)"
+          git commit -m "Deploy Apps via ArgoCD $(date)"
           echo "Changes committed successfully : msg - $(git log --oneline -1)"
-          git push origin HEAD:fluxcd-obs
+          git push origin HEAD:argocd-obs
           echo "push successful"
