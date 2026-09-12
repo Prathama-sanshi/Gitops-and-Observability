@@ -70,8 +70,8 @@ ArgoCD Directory Structure
     │   ├── templates
     │   └── values.yaml
     └── resources
-        ├── app-project.yaml
-        ├── argocd-application.yaml
-        └── argocd-repo-secret.yaml
+        ├── app-project.yaml           <- creates a new project  called dev
+        ├── argocd-application.yaml    <- Deploy Application in dev project in app-of-apps design pattern.
+        └── argocd-repo-secret.yaml    <- Create this secret manually, uses ssh keys to connect github!
 
 ```
