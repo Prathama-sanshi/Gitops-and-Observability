@@ -7,7 +7,7 @@ spec:
   project: dev
   source:
     repoURL: 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
-    targetRevision: gitops-obs
+    targetRevision: argocd-obs
     path: Application/apps/overlays/dev-cluster
     
     # without crashing the strict decoder engine!
