@@ -1,9 +1,47 @@
+### 🚀 GitOps & Observability
+
+* **Prometheus Instrumentation:** Developed a Python file-monitoring application using the **Prometheus client library** to expose custom application metrics on /metrics via port 8000.
+* **Containerization & Helm Packaging:** Dockerized the core application and packaged it into a customizable **Helm chart** complete with ConfigMaps, liveness/readiness probes, Horizontal Pod Autoscalers (HPA), and strict CPU/memory resource limits.
+* **Observability Stack Integration:** Deployed the **kube-prometheus-stack** in-cluster and configured automated metric scraping from the application instances utilizing a targeted Kubernetes **PodMonitor** custom resource.
+* **Alerting as Code:** Coded proactive alerting thresholds directly into the infrastructure repository using Prometheus operator **PrometheusRule** CRDs.
+* **GitOps Automation:** Automated the entire end-to-end infrastructure and application deployment lifecycle with **ArgoCD** and **FluxCD**, For ArgoCD  **app-of-apps** architectural pattern alongside **Kustomize-based** environment overlays for development is used and for FluxCD
+
+  
 ### 🚀 Prerequisites
 * WSL version: 2.7.13.0 or higher
 * Docker version: 29.3.0 or higher
 * Minikube version: v1.38.0  or higher
 * FluxCD CLI version: 2.9.5 or higher (Helm chart: 2.19.0)
 * ArgoCD CLI version: v3.5.1+109ca7c (Helm chart:  10.3.3)
+
+## 🚀 Infrastructure Setup
+
+We are going to deploy the custom application, observability stack, and GitOps agent in our WSL environment.
+
+To accomplish this, we first need to create a self-hosted GitHub Actions runner on the local WSL machine.
+
+### Step 1: Log in to GitHub
+Sign in to your GitHub account using a web browser.
+
+### Step 2: Navigate to Self-Hosted Runners
+1. Open your GitHub repository.
+2. Go to **Settings** → **Actions** → **Runners**.
+3. Select **Self-hosted runners**.
+
+### Step 3: Create a New Runner
+1. Click **New self-hosted runner**.
+2. Select the appropriate operating system and architecture for your WSL environment.
+3. Copy the generated setup commands.
+4. Run the commands in your local WSL terminal to register the runner with the repository.
+
+### Step 4: Verify the Runner
+After the configuration is complete, start the runner by executing:
+Whenever you are running GitHub pipeline use this below command to host your runner in local WSL.
+```bash
+./run.sh
+```
+
+<img width="595" height="155" alt="image" src="https://github.com/user-attachments/assets/38c4425f-9d14-434f-af66-69ce07dcf8e3" />
 
 ### 🚀 Introduction:
 ## 1.Deploy Application via FluxCD
@@ -57,11 +95,5 @@
         * Delete the ArgoCD Custom Resources and related configurations.
         * Cleans up all argocd-managed resources to restore the cluster to its pre-installation state.
           
-### 🚀 GitOps & Observability
-
-* **Prometheus Instrumentation:** Developed a Python file-monitoring application using the **Prometheus client library** to expose custom application metrics on /metrics via port 8000.
-* **Containerization & Helm Packaging:** Dockerized the core application and packaged it into a customizable **Helm chart** complete with ConfigMaps, liveness/readiness probes, Horizontal Pod Autoscalers (HPA), and strict CPU/memory resource limits.
-* **Observability Stack Integration:** Deployed the **kube-prometheus-stack** in-cluster and configured automated metric scraping from the application instances utilizing a targeted Kubernetes **PodMonitor** custom resource.
-* **Alerting as Code:** Coded proactive alerting thresholds directly into the infrastructure repository using Prometheus operator **PrometheusRule** CRDs.
-* **GitOps Automation:** Automated the entire end-to-end infrastructure and application deployment lifecycle with **ArgoCD** and **FluxCD**, For ArgoCD  **app-of-apps** architectural pattern alongside **Kustomize-based** environment overlays for development is used and for FluxCD Helmrelease and architectural pattern alongside **Kustomize-based** environment overlays for developments is used.
+Helmrelease and architectural pattern alongside **Kustomize-based** environment overlays for developments is used.
 
