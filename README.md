@@ -7,9 +7,10 @@ Directory Structure:
 
 # FLUX Directory Structure :
 
+```text
 fluxcd-obs/
 ├── Application/    
-│   ├── application code/   <- Application code, Dockerfile, and requirements
+│   ├── application code/   
 │   │   ├── Dockerfile
 │   │   ├── README.md       <- Read about application
 │   │   ├── file_monitor.py
@@ -18,9 +19,9 @@ fluxcd-obs/
 │   │   ├── base/                    
 │   │   │   ├── file-monitor/                  # App-1: file-monitor (base configuration for all environments)
 │   │   │   │   └── versions/
-│   │   │   │       └── file-monitor-1.0.0/   # If new version is launched we can add new folder under versions and point our site to this folder.
+│   │   │   │       └── file-monitor-1.0.0/   # If new version is launched, add new folder and point site here.
 │   │   │   │           ├── kustomization.yaml
-│   │   │   │           └── values.yaml        <- references the file-monitor helm chart path, kustomization will handle the rendering.
+│   │   │   │           └── values.yaml        <- references the file-monitor helm chart path, kustomization handles rendering.
 │   │   │   └── kube-prometheus-stack/         # App-2: kube-prometheus-stack (base configuration for all environments)
 │   │   │       └── versions/                
 │   │   │           └── kube-prometheus-stack-88.3.0/
@@ -75,12 +76,13 @@ fluxcd-obs/
 │                   ├── crds/
 │                   ├── files/
 │                   └── templates/
-FluxCD/                                 <- FluxCD-related deployment and resource files
-├── Helm-chart/                         <- Helm charts for deploying FluxCD controllers
-│   └── flux2/                          <- Main Helm chart for FluxCD GitOps controller
-│       ├── Chart.yaml
-│       ├── values.yaml
-│       └── (other FluxCD helm chart files)
-├── Resources/                          <- FluxCD resources
-│   ├── GitRepository.yaml              <- Defines a FluxCD GitRepository resource
-│   └── kustomization.yaml              <- Kustomize configuration for Flux resources
+├── FluxCD/                                 <- FluxCD-related deployment and resource files
+│   ├── Helm-chart/                         <- Helm charts for deploying FluxCD controllers
+│   │   └── flux2/                          <- Main Helm chart for FluxCD GitOps controller
+│   │       ├── Chart.yaml
+│   │       ├── values.yaml
+│   │       └── (other FluxCD helm chart files)
+│   └── Resources/                          <- FluxCD resources
+│       ├── GitRepository.yaml              <- Defines a FluxCD GitRepository resource
+│       └── kustomization.yaml              <- Kustomize configuration for Flux resources
+```
