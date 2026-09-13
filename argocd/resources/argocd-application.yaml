@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: dev-file-monitor
   namespace: argocd
+  # 1. ADDED FINALIZER: Enables cascading deletes so deleting the App removes its resources
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: dev
   source:
