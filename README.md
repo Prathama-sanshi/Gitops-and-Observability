@@ -118,8 +118,15 @@ Whenever you are running GitHub pipeline use this below command to host your run
         * This will helm uninstall the ArgoCD
         * Delete the ArgoCD Custom Resources and related configurations.
         * Cleans up all argocd-managed resources to restore the cluster to its pre-installation state.
+### Result After Deployment :
+
+1] CLI status:
+
+<img width="629" height="122" alt="image" src="https://github.com/user-attachments/assets/4a62a76c-a876-4f4f-ba3d-3ccc57e18e71" />
+
+2] UI status:
+<img width="1380" height="691" alt="image" src="https://github.com/user-attachments/assets/d817fdfc-7b8c-4bf1-b181-5a19afd60bb8" />
           
-Helmrelease and architectural pattern alongside **Kustomize-based** environment overlays for developments is used.
 
 # Observability Dashboards
 * Grafana Dashboard:
