@@ -127,6 +127,12 @@ Whenever you are running GitHub pipeline use this below command to host your run
 2] UI status:
 <img width="1380" height="691" alt="image" src="https://github.com/user-attachments/assets/d817fdfc-7b8c-4bf1-b181-5a19afd60bb8" />
           
+3] Parent APP :
+
+<img width="822" height="497" alt="image" src="https://github.com/user-attachments/assets/daf8f6ef-7bc6-4302-a243-a60ec0527877" />
+4] APP 1:  File monitor
+
+<img width="1223" height="549" alt="image" src="https://github.com/user-attachments/assets/e73e89bd-9942-4d6a-85e3-1f81cd039b28" />
 
 # Observability Dashboards
 * Grafana Dashboard:
