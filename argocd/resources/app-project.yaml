@@ -43,4 +43,4 @@ spec:
 
   # 4. Allowed source repositories
   sourceRepos:
-    - 'git@github.com:Prathama-sanshi/Argocd-and-Observability.git'
+    - 'git@github.com:Prathama-sanshi/Gitops-and-Observability.git'
