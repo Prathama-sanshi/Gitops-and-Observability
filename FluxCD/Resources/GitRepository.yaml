@@ -4,7 +4,7 @@ metadata:
   name: fluxcd-obs
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 2m
   url: https://github.com/Prathama-sanshi/Gitops-and-Observability.git
   ref:
     branch: fluxcd-obs

@@ -4,7 +4,7 @@ metadata:
   name: fluxcd-obs
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 2m
   path: "./Application/apps/overlays/dev-cluster/" # Path inside the Git repository
   prune: true
   sourceRef:
