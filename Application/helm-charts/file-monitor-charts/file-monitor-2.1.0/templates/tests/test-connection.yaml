@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "file-monitor-charts.fullname" . }}-test-connection"
+  labels:
+    {{- include "file-monitor-charts.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:latest
+      command: ['curl']
+      args: ['{{ include "file-monitor-charts.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
