@@ -4,4 +4,4 @@ buildMetadata: [ originAnnotations ]
 #resources:
 #  - dev-file-monitor
 #  - dev-kube-prometheus-stack
-  - dev-elasticsearch-kibana
+#  - dev-elasticsearch-kibana
