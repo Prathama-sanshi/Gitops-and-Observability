@@ -142,4 +142,7 @@ Whenever you are running GitHub pipeline use this below command to host your run
 * Prometheus Targets:
 <img width="1593" height="357" alt="image" src="https://github.com/user-attachments/assets/c44f87dd-46b4-4ea8-9bbd-01bc9d6fe349" />
 
+# Kibana Dashboards
+
+<img width="1866" height="638" alt="image" src="https://github.com/user-attachments/assets/08bdcd5d-d7a6-4c05-9856-7376049d83b5" />
 
