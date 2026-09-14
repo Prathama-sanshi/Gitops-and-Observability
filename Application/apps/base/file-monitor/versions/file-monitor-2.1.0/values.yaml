@@ -1,8 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
   name: file-monitor
-  namespace: flux-system
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: file-monitor
 spec:
   project: dev
   destination:
