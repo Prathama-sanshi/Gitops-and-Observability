@@ -207,7 +207,7 @@ fluentbit:
     requests:
       cpu: 50m
       memory: 64Mi
-    nodeSelector: {}
+
 
 
 # Elasticsearch Endpoint Configuration
