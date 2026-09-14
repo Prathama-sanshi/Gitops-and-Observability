@@ -125,14 +125,22 @@ Whenever you are running GitHub pipeline use this below command to host your run
 <img width="629" height="122" alt="image" src="https://github.com/user-attachments/assets/4a62a76c-a876-4f4f-ba3d-3ccc57e18e71" />
 
 2] UI status:
-<img width="1380" height="691" alt="image" src="https://github.com/user-attachments/assets/d817fdfc-7b8c-4bf1-b181-5a19afd60bb8" />
-          
+
+<img width="1864" height="533" alt="image" src="https://github.com/user-attachments/assets/b61e864f-8bd9-4c61-829c-3dbd1425039c" />
+
+        
 3] Parent APP :
 
-<img width="822" height="497" alt="image" src="https://github.com/user-attachments/assets/daf8f6ef-7bc6-4302-a243-a60ec0527877" />
-4] APP 1:  File monitor
+<img width="697" height="486" alt="image" src="https://github.com/user-attachments/assets/8c5c075f-61ae-4cb5-9600-576c1b1b598b" />
 
-<img width="1223" height="549" alt="image" src="https://github.com/user-attachments/assets/e73e89bd-9942-4d6a-85e3-1f81cd039b28" />
+
+4] File monitor
+
+<img width="1401" height="330" alt="image" src="https://github.com/user-attachments/assets/a76eea0d-1362-4402-a0e3-6499c643b54e" />
+
+5] ElasticSearch and Kibana:
+
+<img width="1399" height="423" alt="image" src="https://github.com/user-attachments/assets/99fdc7ba-9514-444f-80d3-b335f8973c68" />
 
 # Observability Dashboards
 * Grafana Dashboard:
