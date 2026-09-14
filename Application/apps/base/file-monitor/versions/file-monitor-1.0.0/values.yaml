@@ -10,12 +10,16 @@ spec:
   timeout: 10m
   chart:
     spec:
-      chart: ./Application/helm-charts/file-monitor-charts/file-monitor-2.1.0
+      chart: ./Application/helm-charts/file-monitor-charts/file-monitor-0.1.0
       sourceRef:
         kind: GitRepository
         name: fluxcd-obs
         namespace: flux-system
   values:
+    # Default values for file-monitor-charts.
+    # This is a YAML-formatted file.
+    # Declare variables to be passed into your templates.
+
     # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
     replicaCount: 1
 
@@ -23,9 +27,9 @@ spec:
     image:
       repository: file-monitor
       # This sets the pull policy for images.
-      pullPolicy: Never
+      pullPolicy: IfNotPresent  
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "latest"
+      tag: "2.0"
 
     # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     imagePullSecrets: []
@@ -113,21 +117,6 @@ spec:
         - path:
             type: PathPrefix
             value: /headers
-      #   filters:
-      #   - type: RequestHeaderModifier
-      #     requestHeaderModifier:
-      #       set:
-      #       - name: My-Overwrite-Header
-      #         value: this-is-the-only-value
-      #       remove:
-      #       - User-Agent
-      # - matches:
-      #   - path:
-      #       type: PathPrefix
-      #       value: /echo
-      #     headers:
-      #     - name: version
-      #       value: v2
 
     resources:
       requests:
@@ -136,16 +125,6 @@ spec:
       limits:
         memory: "128Mi"
         cpu: "250m"
-      # We usually recommend not to specify default resources and to leave this as a conscious
-      # choice for the user. This also increases chances charts run on environments with little
-      # resources, such as Minikube. If you do want to specify resources, uncomment the following
-      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-      # limits:
-      #   cpu: 100m
-      #   memory: 128Mi
-      # requests:
-      #   cpu: 100m
-      #   memory: 128Mi
 
     # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
     livenessProbe:
@@ -159,28 +138,27 @@ spec:
 
     # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
     autoscaling:
-      enabled: true
+      enabled: false
       minReplicas: 1
       maxReplicas: 100
       targetCPUUtilizationPercentage: 80
-      # targetMemoryUtilizationPercentage: 80
 
     # Additional volumes on the output Deployment definition.
     volumes:
       - name: monitored-files
         emptyDir: {}
-    # - name: foo
-    #   secret:
-    #     secretName: mysecret
-    #     optional: false
+      - name: shared-logs
+        emptyDir: {}
+      - name: fluentbit-config
+        configMap:
+          name: fluent-bit-config
 
     # Additional volumeMounts on the output Deployment definition.
     volumeMounts:
       - name: monitored-files
         mountPath: /app/monitored_files
-    # - name: foo
-    #   mountPath: "/etc/foo"
-    #   readOnly: true
+      - name: shared-logs
+        mountPath: /app/logs
 
     nodeSelector: {}
 
@@ -194,6 +172,7 @@ spec:
       name: file-monitor-config
       data:
         MONITORED_DIR: "/app/monitored_files"
+        LOGGING_DIR: "/app/logs"
         METRICS_PORT: "8000"
         UPDATE_INTERVAL: "5"
         GENERATOR_INTERVAL: "3"
@@ -202,3 +181,21 @@ spec:
         ENVIRONMENT: "dev"
         PYTHONUNBUFFERED: "1"
 
+    fluentbit:
+      image:
+        repository: fluent/fluent-bit
+        tag: "3.0-debug"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        nodeSelector: {}
+
+    # Elasticsearch Endpoint Configuration
+    elasticsearch:
+      host: "elasticsearch-master.logging.svc.cluster.local"
+      port: "9200"
+      logstashPrefix: "app-logs"
