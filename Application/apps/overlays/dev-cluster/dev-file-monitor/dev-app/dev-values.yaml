@@ -23,7 +23,7 @@ spec:
   source:
     repoURL: git@github.com:Prathama-sanshi/Gitops-and-Observability.git
     targetRevision: argocd-obs
-    path: Application/helm-charts/file-monitor-charts/file-monitor-0.1.0/
+    path: Application/helm-charts/file-monitor-charts/file-monitor-2.1.0/
     helm:
       releaseName: file-monitor
       valuesObject:  
