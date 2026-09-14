@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: {{ .Release.Namespace | default "default" }}
+  labels:
+    {{- include "file-monitor-charts.labels" . | nindent 4 }}
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush        1
+        Log_Level    info
+        Parsers_File /fluent-bit/etc/parsers.conf
+
+    [INPUT]
+        Name         tail
+        Path         /app/logs/*.log
+        Tag          app.layered
+        DB           /app/logs/fluent-bit-tail.db
+        Parser       stage1_text_extractor
+        Mem_Buf_Limit 5MB
+
+    [FILTER]
+        Name         parser
+        Match        app.layered
+        Key_Name     inner_json
+        Parser       stage2_json_decoder
+
+    # Dynamic Output Configuration
+    [OUTPUT]
+        Name            es
+        Match           app.layered
+        Host            {{ .Values.elasticsearch.host }}
+        Port            {{ .Values.elasticsearch.port | quote }}
+        Logstash_Format On
+        Logstash_Prefix {{ .Values.elasticsearch.logstashPrefix }}
+        Suppress_Type_Name On 
+
+  parsers.conf: |
+    [PARSER]
+        Name        stage1_text_extractor
+        Format      regex
+        # This Regex extracts date, time, log_level, and log_message fields verbatim
+        Regex       ^(?<date>\d{4}-\d{2}-\d{2}) (?<time>\d{2}:\d{2}:\d{2},\d{3}) (?<log_level>\[[A-Z]+\]) (?<log_message>.*)$
+        Time_Key    time
+        Time_Format %H:%M:%S,%L
+
+    [PARSER]
+        Name        stage2_json_decoder
+        Format      json
