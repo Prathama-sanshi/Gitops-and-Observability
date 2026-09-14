@@ -6,6 +6,9 @@ metadata:
     release: kube-prometheus-stack 
   name: file-monitor-podmonitor
   namespace: dev
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=true
+    argocd.argoproj.io/sync-policy: ForegroundDeletion
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
