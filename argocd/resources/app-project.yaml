@@ -18,6 +18,9 @@ spec:
       server: https://kubernetes.default.svc 
       namespace: observability
     - name: in-cluster
+      server: https://kubernetes.default.svc 
+      namespace: logging
+    - name: in-cluster
       server: https://kubernetes.default.svc  # Fixed: Added missing //
       namespace: kube-system
 
