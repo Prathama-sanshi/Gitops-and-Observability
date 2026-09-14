@@ -3,7 +3,7 @@ kind: Kustomization
 
 
 resources:
-  - ../../../../base/file-monitor/versions/file-monitor-1.0.0
+  - ../../../../base/file-monitor/versions/file-monitor-2.0.0
 
 patches:
   - path: dev-values.yaml
