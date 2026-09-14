@@ -8,3 +8,7 @@ kubectl get secret --namespace observability -l app.kubernetes.io/component=admi
 kubectl --namespace observability port-forward svc/kube-prometheus-stack-grafana 3000:80
 http://localhost:3000
 (upload dashboard json file)
+
+#Step 3: Get Kibana dashboard URL:
+kubectl port-forward svc/kibana 5601:5601 -n logging
+http://localhost:5601
