@@ -3,19 +3,66 @@
 This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment platform running on WSL (Windows Subsystem for Linux). It includes:
 
 * **Custom Application Deployment:** A Prometheus-instrumented application, fully integrated with Fluent Bit for log shipping, is deployed via  GitOps (ArgoCD and FluxCD).
- * **Production-Grade Observability Stack:** Automated deployment of Prometheus, Alertmanager, Grafana, and related monitoring resources, along with an ElasticSearch-Kibana logging and visualization stack. Alerting rules and dashboards are managed as code using PrometheusRule CRs for alert management and Grafana dashboard for visualization, ensuring all observability configurations are version-controlled, reproducible, and auditable.
+ * **Production-Grade Observability Stack:** Automated deployment of Prometheus, Alertmanager, Grafana, and related monitoring resources, along with an ElasticSearch and Kibana logging and visualization stack. Alerting rules and dashboards are managed as code using PrometheusRule CRs for alert management and Grafana dashboard for visualization, ensuring all observability configurations are version-controlled, reproducible, and auditable.
 * **Automated Infrastructure Management:** GitOps workflows powered by both ArgoCD and FluxCD (see respective branches), enabling declarative, version-controlled cluster and application lifecycle management.
 * **CI/CD Integration:** Utilizes GitHub Actions with self-hosted runners to facilitate automated builds, testing, and continuous delivery.
 * **Best Practices:** Implements modern GitOps methodologies for repeatable, auditable, and scalable infrastructure and application delivery.
 
 ### 🎯Purpose  
 - This project provides a reference implementation for building and operating GitOps-driven Kubernetes platforms with integrated observability, leveraging industry-standard tools for automated deployments, monitoring, logging, and lifecycle management.
-- It places a strong emphasis on observability by design: the custom application is built to explicitly control what is exposed through the `/metrics` endpoint and forwarded to the observability stack. Metrics are collected through targeted PodMonitor CR, while logs are processed by a Fluent Bit sidecar with custom parser logic before being shipped to Elasticsearch. This approach provides greater control and security compared to traditional scrape-based configurations, where broader system or pod-level telemetry may be collected indiscriminately.
+- It places a strong emphasis on observability by design: the custom application is built to explicitly control what is exposed through the `/metrics` endpoint and forwarded to the observability stack. Metrics are collected through targeted PodMonitor custom resources (CRs), while logs are processed by a Fluent Bit sidecar with custom parser logic before being shipped to Elasticsearch. This approach provides greater control and security compared to traditional scrape-based configurations, where broader system or pod-level telemetry may be collected indiscriminately.
 -  It demonstrates recommended repository structures, deployment patterns, observability integration, CI/CD automation, and GitOps best practices, enabling users to adopt, learn, or extend production-aligned GitOps architectures in their own environments.
-- It showcases GitOps implementations using both ArgoCD and FluxCD, leveraging Helm charts and Kustomize base/overlay patterns.
+- It showcases GitOps implementations using both ArgoCD and FluxCD, leveraging Helm charts and Kustomize base/overlay patterns to enable reusable, environment-specific, and scalable application deployments.
   
+### 🏗️ Architecture Highlights
 
-  
+- GitOps Controllers: ArgoCD and FluxCD
+- Package Management: Helm Charts
+- Configuration Management : Kustomize (Base/Overlay)
+- Monitoring: Prometheus, Alertmanager, Grafana
+- Logging: Fluent Bit, Elasticsearch, Kibana [EFK stack]
+- CI/CD: GitHub Actions with Self-Hosted Runner
+- Kubernetes Platform: Minikube on WSL
+
+## Architecture Diagram
+```text
+GitHub Repository
+        |
+        v
++------------------+
+| GitHub Actions   |
+| Self-hosted WSL  |
++------------------+
+        |
+        v
++------------------+
+| Minikube Cluster |
++------------------+
+        |
++------------------------+
+| GitOps Controllers     |
+| ArgoCD / FluxCD        |
++------------------------+
+        |
+        v
++------------------------+
+| Applications           |
+| File Monitor           |
++------------------------+
+        |
+        +-------> Prometheus
+        |
+        +-------> Grafana
+        |
+        +-------> Fluent Bit
+                       |
+                       v
+                 Elasticsearch
+                       |
+                       v
+                    Kibana
+
+```
 ### 🚀 Prerequisites
 * WSL version: 2.7.13.0 or higher
 * Docker version: 29.3.0 or higher
@@ -25,8 +72,7 @@ This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment
 
 ## 🚀 Infrastructure Setup
 
-We are going to deploy the custom application, observability stack and ElasticSearch-Kibana stack via GitOps agent(argocd and fluxcd) in our WSL environment.
-
+We will deploy the custom application, observability stack, and Elasticsearch-Kibana stack through GitOps controllers (ArgoCD and FluxCD) in a local WSL environment.
 To accomplish this, we first need to create a self-hosted GitHub Actions runner on the local WSL machine.
 
 ### Step 1: Log in to GitHub
@@ -45,7 +91,7 @@ Sign in to your GitHub account using a web browser.
 
 ### Step 4: Verify the Runner
 After the configuration is complete, start the runner by executing:
-Whenever you are running GitHub pipeline use this below command to host your runner in local WSL.
+Whenever you run a GitHub Actions workflow, start the self-hosted runner on your local WSL environment using the following command:
 ```bash
 ./run.sh
 ```
@@ -63,13 +109,13 @@ Whenever you are running GitHub pipeline use this below command to host your run
         * It uses Kustomization CR path to watch the changes in repository.
     * Step: 2.Run Pipeline FluxCD Gitops Deployment.
         * This will clone the flucd-obs repo
-        * It uncomments out entry of desired application(pipeline inputes) under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
+        * It uncomments out entry of desired application(pipeline inputs) under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
         * When FluxCD reconciles the Kustomization, it processes the referenced HelmRelease resources and deploys the application to the Kubernetes cluster.
         * The application is then automatically deployed and managed by FluxCD.
     * Step: 3.Run Pipeline FluxCD Gitops Undeployment
         * This will clone the flucd-obs repo
         * And comments out entry of desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
-        * When FluxCD kustomization renders the charts, it picks the changes and applies it to cluster (deletes if not present)
+        * When FluxCD reconciles the Kustomization resource, it detects the repository change and applies the updated desired state to the cluster.
         * During the next reconciliation cycle, FluxCD detects the change and updates the cluster state accordingly.
         * Resources that are no longer referenced are removed from the cluster.
         * The application is successfully undeployed by FluxCD.
@@ -109,14 +155,14 @@ Whenever you are running GitHub pipeline use this below command to host your run
         * pre-requisite : create a git secret that connect github via ssh. 
     * Step: 2.Run Pipeline ArgoCD Gitops Deployment.
         * This will clone the argocd-obs repo
-        * It uncomments out entry of desired application(pipeline inputes) under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
-        * When ArgoCD reconciles the Kustomization, it processes the referenced Application resources and deploys the application to the Kubernetes cluster.
+        * It uncomments out entry of desired application(pipeline inputs) under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
+        * When ArgoCD synchronizes the Application resource, it renders the Kustomize manifests and applies the desired state to the cluster.
         * The application is then automatically deployed and managed by ArgoCD.
     * Step: 3.Run Pipeline ArgoCD Gitops Undeployment
         * This will clone the argocd-obs repo
         * And comments out entry of desired application under path ./Application/apps/overlays/dev-cluster/kustomization.yaml.
-        * When argocd kustomization renders the charts, it picks the changes and applies it to cluster (deletes if not present)
-        * During the next reconciliation cycle, argocd detects the change and updates the cluster state accordingly.
+        * When ArgoCD synchronizes the Application resource, it renders the Kustomize manifests and applies the updated desired state to the cluster.
+        * During the next synchronization cycle, argocd detects the change and updates the cluster state accordingly.
         * Resources that are no longer referenced are removed from the cluster.
         * The application is successfully undeployed by argocd.
     * Step: 4.Run Pipeline Argocd Uninstall - cleanup
