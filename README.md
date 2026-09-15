@@ -1,14 +1,19 @@
 # 🚀 Introduction:
 
-This repository demonstrates a complete GitOps-driven Kubernetes deployment platform running on WSL. It showcases the deployment of a custom Prometheus-instrumented application, a production-ready observability stack, and automated infrastructure management using both ArgoCD and FluxCD(check branches). The project leverages Helm, Kustomize, GitHub Actions self-hosted runners, and GitOps best practices to enable consistent, automated application delivery and lifecycle management.
+This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment platform running on WSL (Windows Subsystem for Linux). It includes:
 
-### 🚀 GitOps & Observability
+* **Custom Application Deployment:** A Prometheus-instrumented application, fully integrated with Fluent Bit for log shipping, is deployed via  GitOps (ArgoCD and FluxCD).
+ * **Production-Grade Observability Stack:** Automated deployment of Prometheus, Alertmanager, Grafana, and related monitoring resources, along with an ElasticSearch-Kibana logging and visualization stack. Alerting rules and dashboards are managed as code using PrometheusRule CRs for alert management and Grafana dashboard for visualization, ensuring all observability configurations are version-controlled, reproducible, and auditable.
+* **Automated Infrastructure Management:** GitOps workflows powered by both ArgoCD and FluxCD (see respective branches), enabling declarative, version-controlled cluster and application lifecycle management.
+* **CI/CD Integration:** Utilizes GitHub Actions with self-hosted runners to facilitate automated builds, testing, and continuous delivery.
+* **Best Practices:** Implements modern GitOps methodologies for repeatable, auditable, and scalable infrastructure and application delivery.
 
-* **Prometheus Instrumentation:** Developed a Python file-monitoring application using the **Prometheus client library** to expose custom application metrics on /metrics via port 8000.
-* **Containerization & Helm Packaging:** Dockerized the core application and packaged it into a customizable **Helm chart** complete with ConfigMaps, liveness/readiness probes, Horizontal Pod Autoscalers (HPA), and strict CPU/memory resource limits.
-* **Observability Stack Integration:** Deployed the **kube-prometheus-stack** in-cluster and configured automated metric scraping from the application instances utilizing a targeted Kubernetes **PodMonitor** custom resource.
-* **Alerting as Code:** Coded proactive alerting thresholds directly into the infrastructure repository using Prometheus operator **PrometheusRule** CRDs.
-* **GitOps Automation:** Automated the entire end-to-end infrastructure and application deployment lifecycle with **ArgoCD** and **FluxCD**, For ArgoCD  **app-of-apps** architectural pattern alongside **Kustomize-based** environment overlays for development is used and for FluxCD
+### 🎯Purpose  
+- This project provides a reference implementation for consistent, automated deployment and management of Kubernetes workloads using industry-standard tools and GitOps principles.
+- It places a strong emphasis on observability by design: the custom application is built to explicitly control what is exposed and forwarded to the observability stack through targeted PodMonitor resources and a selective Fluent Bit sidecar. This adds a layer of security compared to traditional scrape-based configurations, where broader system or pod-level telemetry may be collected indiscriminately.
+-  It demonstrates recommended repository structures, deployment patterns, observability integration, CI/CD automation, and GitOps best practices, enabling users to adopt, learn, or extend production-aligned GitOps architectures in their own environments.
+- It showcases GitOps implementations using both ArgoCD and FluxCD, leveraging Helm charts and Kustomize base/overlay patterns.
+  
 
   
 ### 🚀 Prerequisites
@@ -20,7 +25,7 @@ This repository demonstrates a complete GitOps-driven Kubernetes deployment plat
 
 ## 🚀 Infrastructure Setup
 
-We are going to deploy the custom application, observability stack, and GitOps agent in our WSL environment.
+We are going to deploy the custom application, observability stack and ElasticSearch-Kibana stack via GitOps agent(argocd and fluxcd) in our WSL environment.
 
 To accomplish this, we first need to create a self-hosted GitHub Actions runner on the local WSL machine.
 
