@@ -24,6 +24,44 @@ This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment
 - CI/CD: GitHub Actions with Self-Hosted Runner
 - Kubernetes Platform: Minikube on WSL
 
+### 🚀 Design Discussion.
+1] Controlled Observability :
+```text
+Prometheus
+    ↓
+PodMonitor [Application PodMonitor - pod label based]
+    ↓
+Pod Labels
+    ↓
+file-monitor pod [Custom APP]
+```
+* Why not use serviceMonitor?
+The Service Monitor are used for Maximum scalability, but currently our focus is on controlled observability. Even in case of ServiceMonitor , it essentially scrapes same Metrics as that of PodMonitor, but it makes easy for large number of workloads which make it ideal for production use case.
+
+2] Controlled Logging: 
+```text
+File-Monitor [Custom Application]
+│
+├── Application Container
+│      │
+│      └── Application Logs [/app/logs - shared volume]
+│
+└── Fluent Bit Sidecar [/app/logs - shared volume]
+       │
+       ├── Custom Parser
+       ├── Log Filtering
+       └── Elasticsearch
+                │
+                ▼
+             Kibana
+```
+* Why FluentBit sidecar and not Daemonset?
+
+- The design goal of this project was controlled application-specific log processing, rather than cluster-wide log collection. For that reason, I intentionally chose the Fluent Bit sidecar pattern instead of a DaemonSet-based deployment.
+- In a DaemonSet architecture, Fluent Bit runs once per node and collects logs from all containers on that node. While this approach is resource-efficient and commonly used in production environments, it was not aligned with the observability objectives of this project.
+- With the sidecar approach, each application pod contains a dedicated Fluent Bit container that processes only that application's logs. The sidecar uses custom parser configurations, provided through a ConfigMap, to parse, enrich, and forward application-specific logs to Elasticsearch. This gives the application explicit control over what log data is collected and how it is processed before being shipped to the logging backend.
+- The primary tradeoff of this design is resource consumption at scale. For example, if a node hosts 10 application pods, the sidecar model results in 10 Fluent Bit containers running on that node. In contrast, a DaemonSet-based deployment would require only a single Fluent Bit instance per node, making it significantly more resource-efficient and easier to manage in large-scale environments.
+
 ## Architecture Diagram
 ```text
 ┌──────────────────────────────────────────────────────────────┐
@@ -107,6 +145,7 @@ This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment
                                        └───────────────────┘
 
 ```
+
 ### 🚀 Prerequisites
 * WSL version: 2.7.13.0 or higher
 * Docker version: 29.3.0 or higher
