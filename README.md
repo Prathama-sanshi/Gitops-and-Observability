@@ -9,8 +9,8 @@ This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment
 * **Best Practices:** Implements modern GitOps methodologies for repeatable, auditable, and scalable infrastructure and application delivery.
 
 ### 🎯Purpose  
-- This project provides a reference implementation for consistent, automated deployment and management of Kubernetes workloads using industry-standard tools and GitOps principles.
-- It places a strong emphasis on observability by design: the custom application is built to explicitly control what is exposed and forwarded to the observability stack through targeted PodMonitor resources and a selective Fluent Bit sidecar. This adds a layer of security compared to traditional scrape-based configurations, where broader system or pod-level telemetry may be collected indiscriminately.
+- This project provides a reference implementation for building and operating GitOps-driven Kubernetes platforms with integrated observability, leveraging industry-standard tools for automated deployments, monitoring, logging, and lifecycle management.
+- It places a strong emphasis on observability by design: the custom application is built to explicitly control what is exposed through the `/metrics` endpoint and forwarded to the observability stack. Metrics are collected through targeted PodMonitor CR, while logs are processed by a Fluent Bit sidecar with custom parser logic before being shipped to Elasticsearch. This approach provides greater control and security compared to traditional scrape-based configurations, where broader system or pod-level telemetry may be collected indiscriminately.
 -  It demonstrates recommended repository structures, deployment patterns, observability integration, CI/CD automation, and GitOps best practices, enabling users to adopt, learn, or extend production-aligned GitOps architectures in their own environments.
 - It showcases GitOps implementations using both ArgoCD and FluxCD, leveraging Helm charts and Kustomize base/overlay patterns.
   
