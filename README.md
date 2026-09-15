@@ -35,7 +35,7 @@ Pod Labels
     ↓
 file-monitor pod [Custom APP]
 ```
-* Why not use serviceMonitor?
+#### Q1] Why not use serviceMonitor?
 The Service Monitor are used for Maximum scalability, but currently our focus is on controlled observability. Even in case of ServiceMonitor , it essentially scrapes same Metrics as that of PodMonitor, but it makes easy for large number of workloads which make it ideal for production use case.
 
 2] Controlled Logging: 
@@ -55,7 +55,7 @@ File-Monitor [Custom Application]
                 ▼
              Kibana
 ```
-* Why FluentBit sidecar and not Daemonset?
+#### Q2] Why FluentBit sidecar and not Daemonset?
 
 - The design goal of this project was controlled application-specific log processing, rather than cluster-wide log collection. For that reason, I intentionally chose the Fluent Bit sidecar pattern instead of a DaemonSet-based deployment.
 - In a DaemonSet architecture, Fluent Bit runs once per node and collects logs from all containers on that node. While this approach is resource-efficient and commonly used in production environments, it was not aligned with the observability objectives of this project.
