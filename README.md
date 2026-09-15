@@ -81,8 +81,8 @@ This repository demonstrates a comprehensive GitOps-driven Kubernetes deployment
 │  │ Namespace: dev                                         │  │
 │  │--------------------------------------------------------│  │
 │  │ File-Monitor Application                               │  │
-│  │ Fluent Bit Sidecar                                     │  │
-│  │ PodMonitor CRs                                         │  │
+│  │ Fluent Bit Sidecar (Controlled Logging)                │  │
+│  │ PodMonitor CRs  (Controlled Monitoring)                │  │
 │  └────────────────────────────────────────────────────────┘  │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
